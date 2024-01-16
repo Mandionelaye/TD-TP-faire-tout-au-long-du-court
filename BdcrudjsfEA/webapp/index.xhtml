@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:c="http://java.sun.com/jstl/core">
+
+<h:head>
+ <title>Liste des etudiants</title>
+ <h:outputStylesheet library="css" name="bootstrap.min.css" />
+ <link href="style.css" rel="stylesheet" />
+</h:head>
+<h:body>
+
+       <div class="#{etudiantJSFManagedBean.affich?'affichMod w-100':'notAff'}" >
+	 <p:panel id="toggleable"  toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:20px; " styleClass="card">
+         <f:facet name="header">
+         Modifier un Etudiant
+         </f:facet>
+        <p:ajax event="close"  listener="#{etudiantJSFManagedBean.onClose}" />
+        <p:ajax event="toggle" listener="#{etudiantJSFManagedBean.onToggle}" />
+ 
+      <h:form>
+       <h:panelGrid columns="2" cellpadding="3">
+         
+           <h:message for="username1"/><br/>
+          <p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+	        <p:inputText id="username1" styleClass="block" value="#{etudiantJSFManagedBean.etudiant.nom}"
+	         validatorMessage="Enter votre nom." rendered="true"/>
+      		 
+      		 
+	        <h:message for="username2"/><br/>
+	         <p:outputLabel for="username2" styleClass="block">Prenom</p:outputLabel>
+	        <p:inputText id="username2" styleClass="block" value="#{etudiantJSFManagedBean.etudiant.prenom}"
+	        validatorMessage="Enter votre Prenom." required="true"/>
+	        	 
+	     
+	        <h:message for="dateNais"/><br/>
+	         <p:outputLabel for="dateNais" styleClass="block">Date de naissance</p:outputLabel>
+	        
+	       	 <p:calendar id="dateNais" value="#{etudiantJSFManagedBean.dates}" required="true"
+		  pattern="yyyy-MM-dd" mode="popup" showOn="button" validatorMessage="Enter votre date de naissance.">
+		  
+		     </p:calendar>
+		     
+		     <h:commandButton  action="#{etudiantJSFManagedBean.modifier(etudiantJSFManagedBean.etudiant)}" 
+       			value="modifier" styleClass="btn btn-primary"/>
+	    
+      </h:panelGrid>
+      </h:form>
+ 
+        <f:facet name="options">
+            <p:menu>
+                <p:submenu label="Settings">
+                    <p:menuitem value="close" url="/index.xhtml" onclick="PF('panel').close()" />
+                </p:submenu>
+            </p:menu>
+        </f:facet>
+    </p:panel>
+		</div>
+     
+     
+     
+ <div class="container">
+    <h1>Liste des etudiants</h1>
+    <h:form>
+    <p:dataTable value="#{etudiantJSFManagedBean.listeEtudiants}" var= "e"
+   styleClass="table table-striped table-dark" style="width:70%; margin:auto;">
+     <p:column>
+       <f:facet name="header">Id</f:facet>
+       #{e.id}
+     </p:column>
+    <p:column>
+       <f:facet name="header">Nom</f:facet>
+       #{e.nom}
+     </p:column>
+     <p:column>
+       <f:facet name="header">Prenom</f:facet>
+       #{e.prenom}
+     </p:column>
+     <p:column>
+       <f:facet name="header">Date De Naissance</f:facet>
+       #{e.datenaiss}
+     </p:column>
+  <p:column colspan="2">
+         <f:facet name="header">Operation</f:facet>
+		<div class="row box-space-top">
+			<h:panelGroup styleClass="label">
+				<h:commandLink action="#{etudiantJSFManagedBean.supprimerEtudiant(e)}" value="Supprimer" /> 
+			</h:panelGroup>
+			<h:panelGroup styleClass="field">
+				<h:commandLink action="#{etudiantJSFManagedBean.affiche(e)}" value="Modifier" />
+			</h:panelGroup>
+		</div>
+  </p:column>
+	</p:dataTable>
+    </h:form>
+    
+    <f:view>
+    <h1>Creer/Editer un Etudient</h1>
+      <h:form>
+       <h:panelGrid columns="2" cellpadding="3">
+         
+           <h:message for="username1"/><br/>
+          <p:outputLabel for="username1" styleClass="block">Nom</p:outputLabel>
+	        <p:inputText id="username1" styleClass="block" value="#{etudiantJSFManagedBean.etudiant.nom}" a:placeholder="votre nom" 
+	         validatorMessage="Enter votre nom." rendered="true"/>
+      		 
+      		 
+	        <h:message for="username2"/><br/>
+	         <p:outputLabel for="username2" styleClass="block">Prenom</p:outputLabel>
+	        <p:inputText id="username2" styleClass="block" value="#{etudiantJSFManagedBean.etudiant.prenom}" a:placeholder="votre prenom" 
+	        validatorMessage="Enter votre Prenom." required="true"/>
+	        	 
+	     
+	        <h:message for="dateNais"/><br/>
+	         <p:outputLabel for="dateNais" styleClass="block">Date de naissance</p:outputLabel>
+	        
+	       	 <p:calendar id="dateNais" value="#{etudiantJSFManagedBean.dates}" required="true" a:placeholder="votre date de naissance" 
+		  pattern="yyyy-MM-dd" mode="popup" showOn="button" validatorMessage="Enter votre date de naissance.">
+		  
+		     </p:calendar>
+		     
+		     <h:commandButton action="#{etudiantJSFManagedBean.ajouterEtudaint()}" 
+       			value="Ajouter un etudiant" styleClass="btn btn-primary"/>
+      </h:panelGrid>
+      	 <br/> 
+      </h:form>
+    </f:view>
+  </div>  
+</h:body>
+</html>

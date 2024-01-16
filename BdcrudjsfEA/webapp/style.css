@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+
+.affichMod{
+	background: rgba(217, 217, 217, 0.30);
+	position: absolute;
+	width: 1728px;
+	height: 1015px;
+	padding-top: 50px;
+}
+
+.card{
+	width: 50%;
+	position: fixed;
+	left:25%;
+		
+}
+
+.card > .ui-panel-titlebar {
+	background-color:#0d6efd ;
+}
+.notAff{
+	display: none;
+}
